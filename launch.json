@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Aider",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "aider.extract_repo_map",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "args": [
+                "--model",
+                "azure/gpt-4o",
+                "--verbose"
+            ]
+        }
+    ]
+}
