@@ -801,7 +801,6 @@ def get_repo_map(git_root = ".",
     return repo_map
 
 if __name__ == "__main__":
-    git_root = "D:/tmp/genai/aider"
-    repo_map = get_repo_map()
-    with open("repo_map_custom.txt", "wb") as f:
-        f.write(repo_map.encode("utf-8"))
+    git_root = "D:/tmp/genai/agency-swarm"
+    repo_map = get_repo_map(git_root)
+    print(repo_map)
