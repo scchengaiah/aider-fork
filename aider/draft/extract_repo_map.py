@@ -23,7 +23,7 @@ from aider.repo import ANY_GIT_ERROR, GitRepo
 from aider.report import report_uncaught_exceptions
 from aider.versioncheck import check_version, install_from_main_branch, install_upgrade
 
-from .dump import dump  # noqa: F401
+from ..dump import dump  # noqa: F401
 
 
 def get_git_root():
@@ -539,6 +539,7 @@ def main(argv=None, input=None, output=None, force_git_root=None, return_coder=F
                 return 1
 
     repo = None
+    git_dname = git_root
     if args.git:
         try:
             repo = GitRepo(
@@ -601,6 +602,7 @@ def main(argv=None, input=None, output=None, force_git_root=None, return_coder=F
             num_cache_warming_pings=args.cache_keepalive_pings,
             suggest_shell_commands=args.suggest_shell_commands,
             chat_language=args.chat_language,
+            repo_content_prefix=args.repo_content_prefix,
         )
     except ValueError as err:
         io.tool_error(str(err))
@@ -777,7 +779,29 @@ def load_slow_imports(swallow=True):
             raise e
 
 
-if __name__ == "__main__":
-    coder = main(return_coder=True)
+def get_repo_map(git_root = ".", 
+                 repo_content_prefix = None, 
+                 aider_ignore_file=".aiderignore", 
+                 model="gpt-4o-2024-08-06",
+                 map_tokens=1024, 
+                 map_mul_no_files=2):
+    
+    aider_ignore_file_path = os.path.join(git_root, aider_ignore_file) if git_root else aider_ignore_file
+    io = InputOutput(yes=True)
+    
+    repo = GitRepo(io=io, fnames= None, git_dname=git_root, aider_ignore_file=aider_ignore_file_path)
+    
+    coder = Coder.create(main_model=models.Model(model), 
+                         edit_format="whole", repo=repo, io=io, 
+                         map_tokens=map_tokens, map_mul_no_files=map_mul_no_files,
+                         repo_content_prefix = repo_content_prefix)
+    
     repo_map = coder.get_repo_map(force_refresh=True)
-    print(repo_map)
+    
+    return repo_map
+
+if __name__ == "__main__":
+    git_root = "D:/tmp/genai/aider"
+    repo_map = get_repo_map()
+    with open("repo_map_custom.txt", "wb") as f:
+        f.write(repo_map.encode("utf-8"))

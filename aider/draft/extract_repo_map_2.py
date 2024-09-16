@@ -12,7 +12,9 @@ import concurrent.futures
 
 """
     This is an AI Generated code to prepare repository graph. Not to the level of Aider, but does the job 😊
-    AI conversation and the response can be found in extract_repo_map_2.json
+    AI conversation and the response can be found in extract_repo_map_2.json.
+
+    We have used Melty VSCode extension with Anthropic to generate this code.
 """
 
 # Set up logging

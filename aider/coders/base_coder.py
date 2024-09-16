@@ -263,6 +263,7 @@ class Coder:
         num_cache_warming_pings=0,
         suggest_shell_commands=True,
         chat_language=None,
+        repo_content_prefix=None,
     ):
         self.chat_language = chat_language
         self.commit_before_message = []
@@ -395,11 +396,11 @@ class Coder:
                 self.root,
                 self.main_model,
                 io,
-                self.gpt_prompts.repo_content_prefix,
+                repo_content_prefix or self.gpt_prompts.repo_content_prefix,
                 self.verbose,
                 max_inp_tokens,
                 map_mul_no_files=map_mul_no_files,
-                refresh=map_refresh,
+                refresh=map_refresh
             )
 
         self.summarizer = summarizer or ChatSummary(

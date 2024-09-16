@@ -13,6 +13,8 @@ from aider.args_formatter import (
     YamlHelpFormatter,
 )
 
+from aider.coders.base_prompts import CoderPrompts
+
 from .dump import dump  # noqa: F401
 
 
@@ -252,6 +254,12 @@ def get_parser(default_config_files, git_root):
 
     ##########
     group = parser.add_argument_group("Cache Settings")
+    group.add_argument(
+        "--repo-content-prefix",
+        type=str,
+        default=CoderPrompts.repo_content_prefix,
+        help="Content to append to the beginning of the repo map.",
+    )
     group.add_argument(
         "--cache-prompts",
         action=argparse.BooleanOptionalAction,

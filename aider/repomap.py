@@ -66,6 +66,9 @@ class RepoMap:
 
         self.repo_content_prefix = repo_content_prefix
 
+        if self.repo_content_prefix and not self.repo_content_prefix.endswith('\n'):
+            self.repo_content_prefix += '\n'
+
         self.main_model = main_model
 
         self.tree_cache = {}
