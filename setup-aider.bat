@@ -63,4 +63,3 @@ echo [%date% %time%] Launching aider...
 aider --chat-mode code --config aider-config.yml
 
 echo [%date% %time%] Aider session ended. To deactivate the conda environment, type 'conda deactivate'.
-echo [%date% %time%] Setup process completed.
