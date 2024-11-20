@@ -1,3 +1,6 @@
+# Launch Aider with the following command.
+# aider --chat-mode code --config aider-config.yml
+
 # Model settings
 model: azure/gpt-4o
 
